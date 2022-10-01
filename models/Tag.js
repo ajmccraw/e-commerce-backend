@@ -7,6 +7,17 @@ class Tag extends Model {}
 Tag.init(
   {
     // define columns
+    // tag_name: 'pop culture'
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    tag_name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    }
   },
   {
     sequelize,
