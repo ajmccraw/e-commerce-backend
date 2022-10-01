@@ -31,6 +31,35 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
   // find a single tag by its `id`
   // be sure to include its associated Product data
+  Tag.findOne({
+    //which columns we would like
+    attributes: [
+      'id',
+      'tag_name',
+    ],
+    include: [
+      {
+        model: Product,
+        attributes: ['product_name'],
+        through: ProductTag,
+        as: 'tagged_products'
+      }
+    ],
+    where: {
+      id: req.params.id
+    }
+  })
+  .then(dbTagData => {
+    if (!dbTagData) {
+      res.status(404).json({message: 'No category found with this id'});
+      return;
+    }
+    res.json(dbTagData);
+  })
+  .catch(err => {
+    console.log(err);
+    res.status(500).json(err);
+  });
 });
 
 router.post('/', (req, res) => {
