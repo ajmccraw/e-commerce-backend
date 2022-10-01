@@ -7,7 +7,7 @@ router.get('/', (req, res) => {
   // find all categories
   // be sure to include its associated Products
   Category.findAll({
-    //which columns we want
+    //which columns we would like
     attributes: [
       'id',
       'category_name',
@@ -29,6 +29,33 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
   // find one category by its `id` value
   // be sure to include its associated Products
+  Category.findONe({
+    //which columns we would like
+    attributes: [
+      'id',
+      'category_name',
+    ],
+    include: [
+      {
+        model: Product,
+        attributes: ['product_name']
+      }
+    ],
+    where: {
+      id: req.params.id
+    }
+  })
+  .then(dbUserData => {
+    if (!dbUserData) {
+      res.status(404).json({message: 'No category found with this id'});
+      return;
+    }
+    res.json(dbUserData);
+  })
+  .catch(err => {
+    console.log(err);
+    res.status(500).json(err);
+  });
 });
 
 router.post('/', (req, res) => {
