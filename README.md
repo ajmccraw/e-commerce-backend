@@ -31,6 +31,7 @@ THEN I am able to successfully create, update, and delete data in my database
 `npm install dotenv`
 
 ## Usage
+![](/images/module13-still.png)
 `mysql -u root -p`
 `password`
 `source db/schema.sql`
